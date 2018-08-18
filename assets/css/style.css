@@ -1,0 +1,10 @@
+* {
+    box-sizing: border-box;
+}
+
+.Bla {
+    border-bottom: 2px solid grey;
+    width: 100px;
+    height: 100px;
+
+}
