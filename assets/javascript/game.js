@@ -1,6 +1,6 @@
 //Script starts
 var myWordArray = ["bowser", "excitebike", "kirby","link","mario","ridley","samus"];
-//var word = myWordArray[Math.floor(Math.random()*3)];
+var word = myWordArray[Math.floor(Math.random()*myWordArray.length)];
 var winStreakCounerId = document.getElementById("winStreakCounter");
 
 
