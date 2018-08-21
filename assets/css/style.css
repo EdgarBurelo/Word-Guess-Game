@@ -128,6 +128,17 @@ h4 {
     margin-top: 20px;
 }
 
+.invisible {
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    position: fixed;
+    border: none;
+    outline: none;
+    resize: none;
+    z-index: -9999;
+}
+
 .row::after {
     content: "";
     clear: both;
