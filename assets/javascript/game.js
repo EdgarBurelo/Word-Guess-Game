@@ -1,11 +1,11 @@
 //Script starts
-var myWordArray = ["hello", "world", "anything"];
+var myWordArray = ["bowser", "excitebike", "kirby","link","mario","ridley","samus"];
 var word = myWordArray[Math.floor(Math.random()*3)];
 var winStreakCounerId = document.getElementById("winStreakCounter");
 
 
 var hangman = {
-    "word1": myWordArray[Math.floor(Math.random()*3)],
+    "word1": myWordArray[Math.floor(Math.random()*myWordArray.length)],
     "myWrongLetterArray": [],
     "myRightLetterArray": [],
     "myRightGuessArray": [],
@@ -62,6 +62,7 @@ var hangman = {
                 this.winStreak++;
                 document.getElementById("winStreakCounter").innerHTML = this.winStreak;
                 document.getElementById("btn-continue").style.display = "block";
+                this.imgShow();
             }
         }
     },
@@ -80,7 +81,7 @@ var hangman = {
             
     },
     "continueB": function() {
-        this.word1 = myWordArray[Math.floor(Math.random()*3)];
+        this.word1 = myWordArray[Math.floor(Math.random()*myWordArray.length)];
         this.myRightGuessArray = [];
         this.myWrongLetterArray = [];
         this.myRightLetterArray = [];
@@ -93,9 +94,10 @@ var hangman = {
         document.getElementById("btn-continue").style.display = "none";
         document.getElementById("badTrys").innerHTML = "";
         document.getElementById("guessCounter").innerHTML = this.numberOfGuesses;
+        document.getElementById("imgContainer").innerHTML ="";
     },
     "restarB": function() {
-        this.word1 = myWordArray[Math.floor(Math.random()*3)];
+        this.word1 = myWordArray[Math.floor(Math.random()*myWordArray.length)];
         this.myRightGuessArray = [];
         this.myWrongLetterArray = [];
         this.myRightLetterArray = [];
@@ -106,9 +108,19 @@ var hangman = {
         hangman.letterPush();
         document.getElementById("hangmanTrys").innerHTML = "";
         hangman.divAppend();
+        document.getElementById("winStreakCounter").innerHTML = this.winStreak;
         document.getElementById("btn-continue").style.display = "none";
         document.getElementById("badTrys").innerHTML = "";
         document.getElementById("guessCounter").innerHTML = this.numberOfGuesses;
+        document.getElementById("imgContainer").innerHTML ="";
+    },
+    "imgShow": function() {
+        var targetDiv = document.getElementById("imgContainer");
+        var newImg = document.createElement("img");
+        newImg.setAttribute("class", "imgWin");
+        newImg.src = "./assets/images/"+this.word1+".png";
+        targetDiv.appendChild(newImg);
+
     }
 }
 
