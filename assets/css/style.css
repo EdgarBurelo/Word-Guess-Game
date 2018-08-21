@@ -152,6 +152,28 @@ h4 {
     z-index: 0;
 }
 
+.pink-grid {
+    background-image: url(/images/page/nes-classic/grid.png);
+    background-position: bottom center;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    max-width: 1770px;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.blue-gradient {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 50%;
+    width: 100%;
+    background-image: linear-gradient(-180deg, rgba(0,81,138,0.00) 0%, rgba(21,49,99,0.60) 25%, #163263 70%);
+}
+
 .row::after {
     content: "";
     clear: both;
