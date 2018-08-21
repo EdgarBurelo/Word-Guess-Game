@@ -1,17 +1,17 @@
 //Script starts
-var myWordArray = ["Hello", "World", "anything"];
-
+var myWordArray = ["hello", "world", "anything"];
 var word = myWordArray[Math.floor(Math.random()*3)];
-
-var myWrongLetterArray = [];
-var myRightLetterArray = [];
-var myRightGuessArray = [];
-var counter = 0;
-var winFlag = 0;
+var winStreakCounerId = document.getElementById("winStreakCounter");
 
 
 var hangman = {
-    "word1": "worrd",
+    "word1": myWordArray[Math.floor(Math.random()*3)],
+    "myWrongLetterArray": [],
+    "myRightLetterArray": [],
+    "myRightGuessArray": [],
+    "counter": 0,
+    "winFlag": 0,
+    "winStreak": 0,
     "wordLength": word.length,
     "numberOfGuesses": 15,
     "isLetter": function(strValue) { 
@@ -21,52 +21,122 @@ var hangman = {
     "letterPush": function() {
         var sent = this.word1
         for (var j=0; j<sent.length; j++) {
-            myRightLetterArray.push(sent[j]);   
+            this.myRightLetterArray.push(sent[j]);   
         }
         
     },
     "letterComp": function(pressKey) {
         for(var i=0; i < this.word1.length; i++) {
             if (pressKey === this.word1[i]) {
-                 myRightGuessArray[i] = pressKey;
-                 console.log(myRightGuessArray);
+                 this.myRightGuessArray[i] = pressKey;
+                 var wordId = document.getElementById("word"+i);
+                 
+                 wordId.textContent = pressKey;
 
-             } else if (myWrongLetterArray.indexOf(pressKey) == -1 && myRightLetterArray.indexOf(pressKey) == -1 && this.numberOfGuesses > 0) {
-                myWrongLetterArray.push(pressKey);
-                counter++;
+             } else if (this.myWrongLetterArray.indexOf(pressKey) == -1 && this.myRightLetterArray.indexOf(pressKey) == -1 && this.numberOfGuesses > 0) {
+                this.myWrongLetterArray.push(pressKey);
+                this.counter++;
                 this.numberOfGuesses--;
-                console.log(myWrongLetterArray);
-                console.log(counter);
+
+                var targetDiv = document.getElementById("badTrys");
+                var newDiv = document.createElement("div");
+                newDiv.textContent = pressKey+" ,";
+                targetDiv.appendChild(newDiv);
+                newDiv.setAttribute("class", "col-s-1 letters");
+                   
+                document.getElementById("guessCounter").innerHTML = this.numberOfGuesses;
+                console.log(this.myWrongLetterArray);
+                console.log(this.counter);
                 console.log(this.numberOfGuesses);
             }
         }
     },
     "youWin": function() {
         var compSum = 0;
-        for (var i = 0; i< myRightLetterArray.length;i++){
-            if (myRightLetterArray[i] == myRightGuessArray[i]) {
+        for (var i = 0; i< hangman.myRightLetterArray.length;i++){
+            if (hangman.myRightLetterArray[i] == hangman.myRightGuessArray[i]) {
                 compSum ++;
             }
-            if (myRightLetterArray.length == compSum) {
-                winFlag = 1;
+            if (hangman.myRightLetterArray.length == compSum) {
+                this.winFlag = 1;
+                this.winStreak++;
+                document.getElementById("winStreakCounter").innerHTML = this.winStreak;
+                document.getElementById("btn-continue").style.display = "block";
             }
         }
+    },
+    "divAppend": function () {
+        
+        var targetDiv = document.getElementById("hangmanTrys");
+        
+        for (var i =0; i < this.word1.length; i++) {
+            
+            var newDiv = document.createElement("div");
+            newDiv.textContent = "_";
+            targetDiv.appendChild(newDiv);
+            newDiv.setAttribute("class", "col-s-1 letters");
+            newDiv.setAttribute("id", "word"+i);   
+        }
+            
+    },
+    "continueB": function() {
+        this.word1 = myWordArray[Math.floor(Math.random()*3)];
+        this.myRightGuessArray = [];
+        this.myWrongLetterArray = [];
+        this.myRightLetterArray = [];
+        this.counter = 0;
+        this.winFlag = 0;
+        this.numberOfGuesses = 15;
+        hangman.letterPush();
+        document.getElementById("hangmanTrys").innerHTML = "";
+        hangman.divAppend();
+        document.getElementById("btn-continue").style.display = "none";
+        document.getElementById("badTrys").innerHTML = "";
+        document.getElementById("guessCounter").innerHTML = this.numberOfGuesses;
+    },
+    "restarB": function() {
+        this.word1 = myWordArray[Math.floor(Math.random()*3)];
+        this.myRightGuessArray = [];
+        this.myWrongLetterArray = [];
+        this.myRightLetterArray = [];
+        this.counter = 0;
+        this.winStreak = 0;
+        this.winFlag = 0;
+        this.numberOfGuesses = 15;
+        hangman.letterPush();
+        document.getElementById("hangmanTrys").innerHTML = "";
+        hangman.divAppend();
+        document.getElementById("btn-continue").style.display = "none";
+        document.getElementById("badTrys").innerHTML = "";
+        document.getElementById("guessCounter").innerHTML = this.numberOfGuesses;
     }
 }
 
 hangman.letterPush();
+hangman.divAppend();
+
 document.onkeyup = function(event) {
-    if(hangman.numberOfGuesses == 0 || winFlag == 1) {
-        alert("do nothing");
+    
+    if(hangman.numberOfGuesses == 0 || hangman.winFlag == 1) {
+        //alert("do nothing");
     } else {
         console.log(event.key);
         var pressedKey = event.key;
+        var pressedKeyLow = pressedKey.toLowerCase()
         if (hangman.isLetter(pressedKey)) {
-            hangman.letterComp(pressedKey);
+            hangman.letterComp(pressedKeyLow);
 
         } else {
-            alert("You can only choose letters");
+            //alert("You can only choose letters");
         }
         hangman.youWin();
     }
 };
+
+document.getElementById("btn-continue").addEventListener("click", function() {
+    hangman.continueB();
+});
+
+document.getElementById("btn-Restart").addEventListener("click", function() {
+    hangman.restarB();
+});
