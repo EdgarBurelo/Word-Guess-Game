@@ -1,6 +1,6 @@
 # Word-Guess-Game (CLASSIC NESS THEME)
 
-BURELO ENTERTAINMENT SYSTEM brings the newest game. Guess right the word before you run out of chances.
+Burelo Entertainment System brings the newest game. Guess right the word before you run out of chances.
 
 # Instructions
 Choose a letter from the alphabet and guess the hidden word. When you guess wrong the chances will decrease in one. If you guess right the letter will be displayed.
