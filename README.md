@@ -1,7 +1,7 @@
 # Word-Guess-Game (CLASSIC NESS THEME)
 
 Burelo Entertainment System brings the newest game. Guess right the word before you run out of chances.
-Link: https://edgarburelo.github.io/Word-Guess-Game/
+<br>Link: https://edgarburelo.github.io/Word-Guess-Game/
 
 # Instructions
 Choose a letter from the alphabet and guess the hidden word. When you guess wrong the chances will decrease in one. If you guess right the letter will be displayed.
